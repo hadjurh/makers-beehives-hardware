@@ -6,7 +6,6 @@
 #
 # This is the library for Grove Base Hat
 # which used to connect grove sensors for Raspberry Pi.
-
 '''
 This is the code for
     - `Grove - 2.5A DC current sensor  <https://www.seeedstudio.com/Grove-2-5A-DC-Current-Sensor-ACS70331-p-2929.html>`_
@@ -60,6 +59,7 @@ Examples:
 
 import sys
 import time
+import datetime
 from grove.i2c import Bus
 
 ADC_DEFAULT_IIC_ADDR = 0X04
@@ -172,6 +172,7 @@ def main():
                 Vref = 322
             averageValue = 500
 
+            print("time,pin_voltage,current")
             while True:
 
                 if (sensor_type == "5A_AC"):
@@ -183,11 +184,9 @@ def main():
                     pin_voltage = temp[1]
 
                 current = round(current)
-                print("pin_voltage(mV):")
-                print(pin_voltage)
-                print("current(mA):")
-                print(current)
-                print()
+
+                t = datetime.datetime.now().__str__()
+                print(f'{t}, {pin_voltage}, {current}')
                 time.sleep(1)
 
         else:
