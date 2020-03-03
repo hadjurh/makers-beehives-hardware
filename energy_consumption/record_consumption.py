@@ -187,7 +187,7 @@ def main():
 
                 t = datetime.datetime.now().__str__()
                 print(f'{t}, {pin_voltage}, {current}')
-                time.sleep(1)
+                time.sleep(0.5)
 
         else:
             print("parameter input error!")
