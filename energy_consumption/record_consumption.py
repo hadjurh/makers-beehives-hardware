@@ -163,7 +163,7 @@ def main():
                 Vref = 260
             if (sensor_type == "5A_DC"):
                 sensitivity = 1000.0 / 200.0
-                Vref = 1498
+                Vref = 1510
             if (sensor_type == "5A_AC"):
                 sensitivity = 1000.0 / 200.0
                 Vref = 1498
