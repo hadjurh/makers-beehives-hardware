@@ -12,54 +12,46 @@ import os
 from subprocess import call
 from time import sleep
 
+print('Start:', datetime.datetime.now())
+
 hostname = socket.gethostname()
 BEEHIVE_ID = int(hostname[-1])
 
+
 # Timestamp
 def get_timestamp():
-	ts = time.time()
-	st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-	return st
+    ts = time.time()
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+    return st
+
 
 # Reboot from python
 def reboot():
-	print('reboot called but ignored')
-	# command = "/usr/bin/sudo /sbin/shutdown -r now"
-   	# import subprocess
-   	# process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-   	# output = process.communicate()[0]
-   	# print output
+    print('reboot called but ignored')
+
 
 def shutdown():
-	print('shutdown called but ignored')
-	# call('sudo shutdown -h now'.split())
-	sleep(3)
+    print('shutdown called but ignored')
+    # call('sudo shutdown -h now'.split())
+    sleep(3)
+
 
 # Init Serial
 try:
-	ser = serial.Serial('/dev/ttyACM0', 115200)
-except: 
-	try:
-		ser = serial.Serial('/dev/ttyACM1', 115200)
-	except:
-		print('Unable to comunicate with arduino on Serial port')
-		shutdown()
-
-# PiCamera
-try:
-	camera = picamera.PiCamera()
+    ser = serial.Serial('/dev/ttyACM0', 115200)
 except:
-	print('Unable to start camera')
-	shutdown()
-
-GIF_PATH = 'capture.gif'
+    try:
+        ser = serial.Serial('/dev/ttyACM1', 115200)
+    except:
+        print('Unable to comunicate with arduino on Serial port')
+        shutdown()
 
 # Imgur
 image_link = ""
 IMGUR_CLIENT_ID = ""
 with open('imgur_credits.json') as imgur_credits_file:
-	imgur_credits = json.load(imgur_credits_file)
-	IMGUR_CLIENT_ID = imgur_credits['imgurClientID']
+    imgur_credits = json.load(imgur_credits_file)
+    IMGUR_CLIENT_ID = imgur_credits['imgurClientID']
 
 # Spreadsheets
 scope = ['https://spreadsheets.google.com/feeds']
@@ -68,75 +60,86 @@ capture_done = False
 images_resized = False
 gif_created = False
 gif_uploaded = False
-while True :
-	ser.flush()
-	serial_string = ser.readline()
-	print('>>>> incoming serial_string: %s' % serial_string)
+while True:
+    ser.flush()
+    serial_string = ser.readline()
+    print('>>>> incoming serial_string: %s' % serial_string)
 
-	timestamp = get_timestamp()
-	print("[%s]" % timestamp)
+    try:
+        # Check if incoming data is parsable
+        serial_data = json.loads(serial_string)
+        print('>>>> parsed serial_data: %s' % serial_data)
+        print('Parsed serial data:', datetime.datetime.now())
 
-	try :
-		# Check if incoming data is parsable
-		serial_data = json.loads(serial_string)
-		print('>>>> parsed serial_data: %s' % serial_data)
+        # Check light before taking pics (no night vision)
+        if serial_data['light'] != '0.00Lux':
+            # Capture sequence
+            if not capture_done:
+                try:
+                    camera = picamera.PiCamera()
 
-		# Check light before taking pics (no night vision)
-		if serial_data['light'] != '0.00Lux':
-			# Capture sequence
-			if capture_done is not True:
-				for i in range(20) :
-					img_title = str(i) + '.jpg'
-					# Capture image
-					camera.capture(img_title)
-					print('>>>> image %d captured' % i)
+                    for i in range(20):
+                        img_title = str(i) + '.jpg'
+                        # Capture image
+                        camera.capture(img_title)
+                        print('>>>> image %d captured' % i)
 
-					sleep(0.5)
-				capture_done = True
+                        sleep(0.5)
+                    capture_done = True
+                except:
+                    print('Unable to start camera')
+                    shutdown()
 
-			# Convert sequence to gif
-			if images_resized is not True:
-				call(['mogrify', '-resize', '800x600', '*.jpg'])
-				print('>>>> images resized')
-				images_resized = True
-			
-			# Create gif
-			if gif_created is not True:
-				call(['convert', '-delay', '25', '-loop', '0', '*.jpg', GIF_PATH])
-				print('>>>> gif created')
-				gif_created = True
+            print('Captured 20 images:', datetime.datetime.now())
 
-			# Upload image to imgur
-			if gif_uploaded is not True:
-				imgur = pyimgur.Imgur(IMGUR_CLIENT_ID)
-				image_title = 'MakersBeehive ' + str(BEEHIVE_ID) + ' | ' + timestamp
-				uploaded_image = imgur.upload_image(GIF_PATH, title = image_title)
-				image_link = uploaded_image.link
-				print('>>>> image uploaded at %s' % image_link)
-				gif_uploaded = True
-		
-		else:
-			image_link = 'http://placehold.it/800x533/000000/444444?text=No+Light'
+            # Convert sequence to gif
+            if not images_resized:
+                call(['mogrify', '-resize', '800x600', '*.jpg'])
+                print('>>>> images resized')
+                images_resized = True
+            print('Resized images:', datetime.datetime.now())
 
-		# Upload data to spreadsheet
-		API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw61xdBYnNVJI7AEDuUay7il1hTATextokstUNsuIy3jjE-vViu/exec'
-		data = {'beehive_id': BEEHIVE_ID, 'serial_string': serial_string, 'image_link': image_link}
-		r = requests.post(url = API_ENDPOINT, data = data)
-		print('>>>> data uploaded:%s' % r.text)
+            GIF_PATH = 'capture.gif'
+            if not gif_created:
+                call(['convert', '-delay', '25', '-loop', '0', '*.jpg', GIF_PATH])
+                print('>>>> gif created')
+                gif_created = True
+            print('Created GIF:', datetime.datetime.now())
 
-		os.system('cd /home/bee/makers-beehives-hardware-current-measures && git pull')
-		sleep(10)
-		
-		shutdown()
-		break
+            # Upload image to imgur
+            if not gif_uploaded:
+                imgur = pyimgur.Imgur(IMGUR_CLIENT_ID)
+                image_title = 'MakersBeehive ' + str(BEEHIVE_ID) + ' | ' + get_timestamp()
+                uploaded_image = imgur.upload_image(GIF_PATH, title=image_title)
+                image_link = uploaded_image.link
+                print('>>>> image uploaded at %s' % image_link)
+                gif_uploaded = True
+            print('Uploaded GIF:', datetime.datetime.now())
 
-	except Exception as e:
-		print('>>>> SOMETHING WENT WRONG')
-		print(str(e))
-		template = "An exception of type {0} occured"
-		message = template.format(type(e).__name__)
-		print(message)
+        else:
+            image_link = 'http://placehold.it/800x533/000000/444444?text=No+Light'
 
-		# Shutdown if error is not due to incomplete JSON parsing
-		if e.__class__ != ValueError:
-			shutdown()
+        # Upload data to spreadsheet
+        API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw61xdBYnNVJI7AEDuUay7il1hTATextokstUNsuIy3jjE-vViu/exec'
+        data = {'beehive_id': BEEHIVE_ID, 'serial_string': serial_string, 'image_link': image_link}
+        r = requests.post(url=API_ENDPOINT, data=data)
+        print('>>>> data uploaded:%s' % r.text)
+        print('Uploaded data:', datetime.datetime.now())
+
+        os.system('cd /home/bee/makers-beehives-hardware-current-measures && git pull')
+        print('Git pull done:', datetime.datetime.now())
+
+        sleep(10)
+
+        exit(0)
+
+    except Exception as e:
+        print('>>>> SOMETHING WENT WRONG')
+        print(str(e))
+        template = "An exception of type {0} occured"
+        message = template.format(type(e).__name__)
+        print(message)
+
+        # Shutdown if error is not due to incomplete JSON parsing
+        if e.__class__ != ValueError:
+            shutdown()

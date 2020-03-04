@@ -6,3 +6,4 @@ emliot.json
 .idea
 *.xlsx
 venv
+plot/
