@@ -1,6 +1,7 @@
 import serial
 import json
-from energy_consumption.scripts_beehive.utils import get_timestamp
+import time
+import datetime
 
 # Init Serial
 try:
@@ -17,7 +18,8 @@ while True:
     serial_string = ser.readline()
     print('>>>> incoming serial_string: %s' % serial_string)
 
-    timestamp = get_timestamp()
+    ts = time.time()
+    timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
     print("[%s]" % timestamp)
 
     try:
