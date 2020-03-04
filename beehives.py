@@ -135,7 +135,7 @@ while True :
 		print(str(e))
 		template = "An exception of type {0} occured"
 		message = template.format(type(e).__name__)
-		print message
+		print(message)
 
 		# Shutdown if error is not due to incomplete JSON parsing
 		if e.__class__ != ValueError:
