@@ -23,15 +23,17 @@ def get_timestamp():
 
 # Reboot from python
 def reboot():
-    command = "/usr/bin/sudo /sbin/shutdown -r now"
-    import subprocess
-    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-    output = process.communicate()[0]
-    print output
+	print('reboot called but ignored')
+	# command = "/usr/bin/sudo /sbin/shutdown -r now"
+   	# import subprocess
+   	# process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+   	# output = process.communicate()[0]
+   	# print output
 
 def shutdown():
-	call('sudo shutdown -h now'.split())
-	sleep(10)
+	print('shutdown called but ignored')
+	# call('sudo shutdown -h now'.split())
+	sleep(3)
 
 # Init Serial
 try:
@@ -122,10 +124,11 @@ while True :
 		r = requests.post(url = API_ENDPOINT, data = data)
 		print('>>>> data uploaded:%s' % r.text)
 
-		os.system('cd /home/bee/makers-beehives-hardware && git pull')
+		os.system('cd /home/bee/makers-beehives-hardware-current-measures && git pull')
 		sleep(10)
 		
 		shutdown()
+		break
 
 	except Exception as e:
 		print('>>>> SOMETHING WENT WRONG')
