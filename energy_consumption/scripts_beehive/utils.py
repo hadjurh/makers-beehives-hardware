@@ -1,4 +1,12 @@
 import serial
+import time
+import datetime
+
+
+def get_timestamp():
+    ts = time.time()
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+    return st
 
 
 def init_serial():

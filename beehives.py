@@ -82,7 +82,7 @@ while True :
 		print('>>>> parsed serial_data: %s' % serial_data)
 
 		# Check light before taking pics (no night vision)
-		if serial_data['light'] != '0.00Lux' :
+		if serial_data['light'] != '0.00Lux':
 			# Capture sequence
 			if capture_done is not True:
 				for i in range(20) :
@@ -140,5 +140,3 @@ while True :
 		# Shutdown if error is not due to incomplete JSON parsing
 		if e.__class__ != ValueError:
 			shutdown()
-
-		pass
