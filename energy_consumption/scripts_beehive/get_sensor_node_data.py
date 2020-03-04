@@ -27,6 +27,8 @@ while True:
         serial_data = json.loads(serial_string)
         print('>>>> parsed serial_data: %s' % serial_data)
 
+        break
+
     except Exception as e:
         print('>>>> SOMETHING WENT WRONG', str(e))
         print('An exception of type {} occured'.format(type(e).__name__))
