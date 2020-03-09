@@ -7,3 +7,4 @@ emliot.json
 *.xlsx
 venv
 plot/
+__pycache__/
