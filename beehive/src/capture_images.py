@@ -2,6 +2,8 @@ import sys
 from time import sleep
 import datetime
 import picamera
+import glob
+import os
 
 
 # Makersbeehive v2: without resize parameter
@@ -9,6 +11,10 @@ import picamera
 # to have the Pi’s GPU perform the resizing when capturing the image".
 # https://picamera.readthedocs.io/en/release-1.13/recipes1.html#capturing-resized-images
 def capture_images(nb_img=20, path_to_img='beehive/data/pi_img', resize=None):
+    # Remove existing images
+    for f in glob.glob(f'{path_to_img}/*.jpg'):
+        os.remove(f)
+
     # Init
     camera = picamera.PiCamera()
 
