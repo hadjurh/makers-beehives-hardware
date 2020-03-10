@@ -127,5 +127,8 @@ class AMG8833(object):
 if __name__ == '__main__':
     sensor = AMG8833()
     time.sleep(0.5)
-    buf = sensor.read_temp()
-    print(str(datetime.now()) + ',' + str(buf))
+
+    while True:
+        buf = sensor.read_temp()
+        print(str(datetime.now()) + ',' + str(buf))
+        time.sleep(0.2)
