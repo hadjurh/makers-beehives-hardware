@@ -35,7 +35,7 @@ def get_data_from_serial(ser):
             print('>>>> SOMETHING WENT WRONG', str(e))
             print('An exception of type {} occured'.format(type(e).__name__))
 
-    return serial
+    return serial_data
 
 
 if __name__ == '__main__':
