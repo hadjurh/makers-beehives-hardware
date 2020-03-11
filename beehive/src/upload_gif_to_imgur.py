@@ -6,11 +6,9 @@ import datetime
 # https://github.com/Damgaard/PyImgur#uploading-an-image
 def upload_to_imgur(beehive_id, imgur_cred_path='imgur_credits.json', path_to_file='beehive/data/gif/capture.gif'):
     with open(imgur_cred_path) as imgur_credits_file:
-        imgur_credits = json.load(imgur_credits_file)
-    print('Parsed imgur credentials')
-
+        imgur_credits = eval(imgur_credits_file.read())
+    
     imgur = pyimgur.Imgur(imgur_credits['imgurClientID'])
-    print('Established connexion')
     image_title = 'MakersBeehive ' + str(beehive_id) + ' | ' + datetime.datetime.now().__str__()[:-7]
     uploaded_image = imgur.upload_image(path_to_file, title=image_title)
     image_link = uploaded_image.link
