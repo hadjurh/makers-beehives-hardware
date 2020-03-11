@@ -2,7 +2,6 @@ imgur_credits.json
 spreadsheet_credits.json
 emliot.json
 
-*.jpg
 *.gif
 *.xlsx
 
@@ -11,3 +10,4 @@ venv
 __pycache__/
 plot/
 thermal_camera/img/
+beehive/data/
