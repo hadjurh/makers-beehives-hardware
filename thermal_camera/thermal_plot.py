@@ -28,6 +28,8 @@ if __name__ == '__main__':
     with open('out.txt', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';')
         for i, row in enumerate(spamreader):
+            print(i)
+
             thermal_data = row[1]
 
             plot_thermal(thermal_data, 'img_' + str(i + 1))

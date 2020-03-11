@@ -130,5 +130,5 @@ if __name__ == '__main__':
 
     while True:
         buf = sensor.read_temp()
-        print(str(datetime.now()) + ',' + str(buf))
+        print(str(datetime.now()) + ';' + str(buf))
         time.sleep(0.2)
