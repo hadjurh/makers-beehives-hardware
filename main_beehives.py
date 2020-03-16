@@ -19,7 +19,7 @@ serial_data = get_data_from_serial(init_serial())
 print(f'serial data,{datetime.now() - start_time}{line_separator}')
 prev_time = datetime.now()
 
-nb_img = 20
+nb_img = 3
 path_to_img = capture_images(nb_img, resolution=(800, 600))
 print(f'capture {nb_img} images,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
@@ -32,7 +32,7 @@ path_to_gif_file = convert_jpg_to_gif(path_to_img)
 print(f'convert jpg to gif,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
 
-gif_url = upload_to_imgur(beehive_id, path_to_gif_file)
+gif_url = upload_to_imgur(beehive_id, path_to_file=path_to_gif_file)
 print(f'upload gif to imgur,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
 
