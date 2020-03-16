@@ -36,7 +36,7 @@ gif_url = upload_to_imgur(beehive_id, path_to_gif_file)
 print(f'upload gif to imgur,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
 
-upload_to_spreadsheet(beehive_id, serial_data, gif_url)
+upload_to_spreadsheet(beehive_id, str(serial_data), gif_url)
 print(f'upload data to spreadsheet,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
 
