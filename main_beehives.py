@@ -19,7 +19,7 @@ serial_data = get_data_from_serial(init_serial())
 print(f'serial data,{datetime.now() - start_time}{line_separator}')
 prev_time = datetime.now()
 
-nb_img = 3
+nb_img = 20
 path_to_img = capture_images(nb_img, resolution=(800, 600))
 print(f'capture {nb_img} images,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
