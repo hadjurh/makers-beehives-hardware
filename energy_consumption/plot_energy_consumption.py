@@ -4,17 +4,23 @@ import pandas as pd
 import datetime
 from glob import glob
 
-helvetica_bold = fm.FontProperties(fname='C:/Users/hhadjur/Documents/Perso/asgbot/data/fonts/HelveticaNeueBold.ttf')
-helvetica = fm.FontProperties(fname='C:/Users/hhadjur/Documents/Perso/asgbot/data/fonts/Helvetica-Normal.ttf')
+helvetica_bold = fm.FontProperties(fname='D:/Users/Hugo/Documents/asgbot/data/fonts/HelveticaNeueBold.ttf')
+helvetica = fm.FontProperties(fname='D:/Users/Hugo/Documents/asgbot/data/fonts/Helvetica-Normal.ttf')
 
 out_files = glob('energy_consumption/output/*.out')
 
 for out_file in out_files:
+    # Only git pull
+    if 'Mo_pull' not in out_file:
+        continue
+
     task_name = out_file.split('\\')[-1].split('.out')[0]
 
     # Data
     df = pd.read_csv(out_file)
     df['timestamp'] = df['time'].apply(lambda t: datetime.datetime.strptime(t, "%Y-%m-%d %H:%M:%S.%f").timestamp())
+    df['timestamp'] = df['timestamp'] - min(df['timestamp'])
+    print(max(df['timestamp']))
 
     # Plot
     fig = plt.figure(figsize=(15, 7))
@@ -24,7 +30,8 @@ for out_file in out_files:
 
     ax.step(df['timestamp'], df['current'], color='#007aff', linewidth=3, where='post', zorder=6)
 
-    plt.ylim(0, 750)
+    plt.ylim(320, 480)
+    plt.xlim(xmax=32)
     plt.xlabel('Time', fontproperties=helvetica_bold)
     plt.ylabel('Intensity (mA)', fontproperties=helvetica_bold)
     plt.title(f'Intensity evolution for: {task_name}', fontproperties=helvetica_bold, pad=20)

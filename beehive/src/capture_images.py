@@ -24,7 +24,6 @@ def capture_images(nb_img=20, path_to_img='beehive/data/pi_img', resolution=None
     for i in range(nb_img):
         img_path = f'{path_to_img}/{datetime.datetime.now().__str__()}.jpg'
         camera.capture(img_path) if resize is None else camera.capture(img_path, resize=resize)
-        print(f'>>>> image {i} captured')
         sleep(0.5)
 
     return path_to_img
