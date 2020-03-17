@@ -17,6 +17,7 @@ in order to measure current consumption
 """
 
 from datetime import datetime
+from time import sleep
 from beehive.src.capture_images import capture_images
 
 prev_time = datetime.now()
@@ -28,6 +29,8 @@ for nb_img in [1, 2, 3, 5, 7, 10, 15, 20, 30, 50]:
     print(f'capture {nb_img} images,{datetime.now() - prev_time}{line_separator}')
     prev_time = datetime.now()
 
+sleep(10)
+
 print('1b - resolution parameter', datetime.now().__str__())
 for resolution in [(640, 480), (800, 600), (960, 720),
                    (1024, 768), (1280, 960), (1400, 1050),
@@ -37,6 +40,8 @@ for resolution in [(640, 480), (800, 600), (960, 720),
     path_to_img = capture_images(nb_img, resolution=resolution)
     print(f'capture {nb_img} images,{datetime.now() - prev_time}{line_separator}')
     prev_time = datetime.now()
+
+sleep(10)
 
 
 print('1b - resize parameter', datetime.now().__str__())

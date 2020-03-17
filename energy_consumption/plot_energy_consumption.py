@@ -11,7 +11,7 @@ out_files = glob('energy_consumption/output/*.out')
 
 for out_file in out_files:
     # Only git pull
-    if 'Mo_pull' not in out_file:
+    if 'compare_img_size.out' not in out_file:
         continue
 
     task_name = out_file.split('\\')[-1].split('.out')[0]
@@ -23,15 +23,15 @@ for out_file in out_files:
     print(max(df['timestamp']))
 
     # Plot
-    fig = plt.figure(figsize=(15, 7))
+    fig = plt.figure(figsize=(21, 7))
     ax = fig.add_subplot(111)
     axes_labels_font = helvetica_bold
     axes_labels_font.set_size(25)
 
-    ax.step(df['timestamp'], df['current'], color='#007aff', linewidth=3, where='post', zorder=6)
+    ax.step(df['timestamp'], df['current'], color='#007aff', linewidth=2, where='post', zorder=6)
 
-    plt.ylim(320, 480)
-    plt.xlim(xmax=32)
+    # plt.ylim(320, 480)
+    # plt.xlim(xmax=32)
     plt.xlabel('Time', fontproperties=helvetica_bold)
     plt.ylabel('Intensity (mA)', fontproperties=helvetica_bold)
     plt.title(f'Intensity evolution for: {task_name}', fontproperties=helvetica_bold, pad=20)
