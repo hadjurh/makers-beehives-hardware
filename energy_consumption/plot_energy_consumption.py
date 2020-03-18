@@ -11,7 +11,7 @@ out_files = glob('energy_consumption/output/*.out')
 
 for out_file in out_files:
     # Only git pull
-    if 'compare_img_size.out' not in out_file:
+    if 'compare_img_size_v2.out' not in out_file:
         continue
 
     task_name = out_file.split('\\')[-1].split('.out')[0]
