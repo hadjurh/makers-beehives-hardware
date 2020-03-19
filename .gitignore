@@ -10,4 +10,4 @@ venv
 __pycache__/
 plot/
 thermal_camera/img/
-beehive/data/
+
