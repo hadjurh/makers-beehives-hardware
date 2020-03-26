@@ -12,8 +12,8 @@ import os
 # https://picamera.readthedocs.io/en/release-1.13/recipes1.html#capturing-resized-images
 def capture_images(nb_img=20, path_to_img='beehive/data/pi_img', resolution=None, resize=None):
     # Remove existing images
-    # for f in glob.glob(f'{path_to_img}/*.jpg'):
-    #     os.remove(f)
+    for f in glob.glob(f'{path_to_img}/*.jpg'):
+        os.remove(f)
 
     # Init
     camera = picamera.PiCamera()
