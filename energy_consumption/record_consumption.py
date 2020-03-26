@@ -174,7 +174,8 @@ def main():
 
             print("time,pin_voltage,current")
             start_t = t = datetime.datetime.now()
-            while t < start_t + datetime.timedelta(minutes=1):
+            # while t < start_t + datetime.timedelta(minutes=1):
+            while True:
 
                 if (sensor_type == "5A_AC"):
                     pin_voltage = ADC.get_nchan_vol_milli_data(pin, averageValue)
