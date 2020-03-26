@@ -173,7 +173,8 @@ def main():
             averageValue = 500
 
             print("time,pin_voltage,current")
-            while True:
+            start_t = t = datetime.datetime.now()
+            while t < start_t + datetime.timedelta(minutes=1):
 
                 if (sensor_type == "5A_AC"):
                     pin_voltage = ADC.get_nchan_vol_milli_data(pin, averageValue)
@@ -185,7 +186,7 @@ def main():
 
                 current = round(current)
 
-                t = datetime.datetime.now().__str__()
+                t = datetime.datetime.now()
                 print(f'{t}, {pin_voltage}, {current}')
                 #time.sleep(0.5)
 
