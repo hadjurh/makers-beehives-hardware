@@ -32,7 +32,7 @@ def compare_nb_img():
     prev_time = datetime.now()
     for nb_img in [1, 2, 3, 5, 7, 10, 15, 20, 30, 50]:
         capture_images(nb_img, resolution=(800, 600))
-        print(f'{datetime.now() - prev_time},{nb_img}')
+        print(f'{(datetime.now() - prev_time).total_seconds()},{nb_img}')
         prev_time = datetime.now()
 
 
@@ -41,7 +41,7 @@ def compare_resolution_param(nb_img=20):
     prev_time = datetime.now()
     for resolution in resolution_4_3_list:
         capture_images(nb_img, resolution=resolution)
-        print(f'{datetime.now() - prev_time},{resolution[0] * resolution[1]}')
+        print(f'{(datetime.now() - prev_time).total_seconds()},{resolution[0] * resolution[1]}')
         prev_time = datetime.now()
 
 
