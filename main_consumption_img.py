@@ -37,7 +37,7 @@ def compare_nb_img():
 
 
 def compare_resolution_param(nb_img=20):
-    print("duration,pixels")
+#    print("duration,pixels")
     prev_time = datetime.now()
     for resolution in resolution_4_3_list:
         capture_images(nb_img, resolution=resolution)
