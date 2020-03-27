@@ -65,4 +65,4 @@ if __name__ == '__main__':
     # compare_resize_param()
 
     '''2nd analysis'''
-    compare_resolution_param(10)
+    compare_nb_img()
