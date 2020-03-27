@@ -30,7 +30,7 @@ resolution_4_3_list = [(640, 480), (800, 600), (960, 720),
 def compare_nb_img():
     # print("duration,nb_img")
     prev_time = datetime.now()
-    for nb_img in range(1, 51):
+    for nb_img in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30, 50]:
         capture_images(nb_img, resolution=(800, 600))
         print(f'{(datetime.now() - prev_time).total_seconds()},{nb_img}')
         prev_time = datetime.now()

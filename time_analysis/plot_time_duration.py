@@ -16,27 +16,29 @@ axes_labels_font = helvetica_bold
 axes_labels_font.set_size(25)
 helvetica.set_size(20)
 
-ax.scatter(df['pixels'], df['duration'], color='#007aff', s=400, alpha=0.6, zorder=6)
+ax.scatter([p * 1e-6 for p in df['pixels']], df['duration'], edgecolors='#007aff', color='#007aff', s=400, alpha=0.6, zorder=6)
 
 # Linear Regression
-regressor = LinearRegression()
-regressor.fit(np.array(df['pixels']).reshape(-1, 1), np.array(df['duration']).reshape(-1, 1))  # training the algorithm
-r2 = regressor.score(np.array(df['pixels']).reshape(-1, 1), np.array(df['duration']).reshape(-1, 1))
+# regressor = LinearRegression()
+# regressor.fit(np.array(df['pixels']).reshape(-1, 1), np.array(df['duration']).reshape(-1, 1))  # training the algorithm
+# r2 = regressor.score(np.array(df['pixels']).reshape(-1, 1), np.array(df['duration']).reshape(-1, 1))
 
-line_x = np.linspace(0, 50, 500)
-line_y = [x * regressor.coef_[0][0] + regressor.intercept_[0] for x in line_x]
-ax.plot(line_x, line_y)
+# line_x = np.linspace(0, 50, 500)
+# line_y = [x * regressor.coef_[0][0] + regressor.intercept_[0] for x in line_x]
+# ax.plot(line_x, line_y)
+#
+# plt.text(s=f'duration = {round(regressor.coef_[0][0], 3)} * pixels + '
+#            f'{round(regressor.intercept_[0], 3)}\n'
+#            f'R-squared = {round(r2, 4)}',
+#          x=3,
+#          y=50,
+#          fontproperties=helvetica
+#          )
 
-plt.text(s=f'duration = {round(regressor.coef_[0][0], 3)} * pixels + '
-           f'{round(regressor.intercept_[0], 3)}\n'
-           f'R-squared = {round(r2, 4)}',
-         x=3,
-         y=50,
-         fontproperties=helvetica
-         )
-
-plt.xlabel('Number of Pixels', fontproperties=helvetica_bold)
+plt.xlabel('Number of Mega Pixels', fontproperties=helvetica_bold)
 plt.ylabel('Duration of Capture', fontproperties=helvetica_bold)
+helvetica_bold.set_size(30)
+plt.title('Time to Capture 10 Images \nat different resolutions with a PiCamera', fontproperties=helvetica_bold, pad=25)
 for label in ax.get_yticklabels() + ax.get_xticklabels():
     label.set_fontproperties(axes_labels_font)
 
