@@ -28,16 +28,16 @@ resolution_4_3_list = [(640, 480), (800, 600), (960, 720),
 
 
 def compare_nb_img():
-    print("duration,nb_img")
+    # print("duration,nb_img")
     prev_time = datetime.now()
-    for nb_img in [1, 2, 3, 5, 7, 10, 15, 20, 30, 50]:
+    for nb_img in range(1, 51, 1):
         capture_images(nb_img, resolution=(800, 600))
         print(f'{(datetime.now() - prev_time).total_seconds()},{nb_img}')
         prev_time = datetime.now()
 
 
 def compare_resolution_param(nb_img=20):
-    print("duration,pixels")
+#    print("duration,pixels")
     prev_time = datetime.now()
     for resolution in resolution_4_3_list:
         capture_images(nb_img, resolution=resolution)
