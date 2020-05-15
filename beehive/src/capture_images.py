@@ -20,6 +20,8 @@ def capture_images(nb_img=20, path_to_img='beehive/data/pi_img', resolution=None
     if resolution is not None:
         camera.resolution = resolution
 
+    print(f'Camera resolution: {camera.resolution}')
+
     # Capture
     for i in range(nb_img):
         img_path = f'{path_to_img}/{datetime.datetime.now().__str__().replace(" ", "_").replace(":", "_")}.jpg'
