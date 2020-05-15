@@ -28,7 +28,8 @@ prev_time = datetime.now()
 # print(f'resize images,{datetime.now() - prev_time}{line_separator}')
 # prev_time = datetime.now()
 
-path_to_gif_file = convert_jpg_to_gif(path_to_img)
+path_to_gif_file = convert_jpg_to_gif('beehive/data/pi_img_const')
+# path_to_gif_file = convert_jpg_to_gif(path_to_img)
 print(f'convert jpg to gif,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
 
