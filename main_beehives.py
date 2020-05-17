@@ -20,7 +20,7 @@ print(f'serial data,{datetime.now() - start_time}{line_separator}')
 prev_time = datetime.now()
 
 nb_img = 20
-path_to_img = capture_images(nb_img, resolution=(1440, 1080))
+path_to_img = capture_images(nb_img)
 print(f'capture {nb_img} images,{datetime.now() - prev_time}{line_separator}')
 prev_time = datetime.now()
 
